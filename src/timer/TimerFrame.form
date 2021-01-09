@@ -119,6 +119,13 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
+                          <Component id="txt_botao_cronometrar" min="-2" pref="206" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="txt_botao_parar" min="-2" pref="206" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="txt_botao_temporizar" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                               <Component id="txt_display" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
@@ -137,13 +144,7 @@
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="txt_botao_cronometrar" min="-2" pref="206" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txt_botao_parar" min="-2" pref="206" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txt_botao_temporizar" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="txt_botao_zerar_valores" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -169,6 +170,8 @@
                       <Component id="txt_botao_parar" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                       <Component id="txt_botao_temporizar" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="txt_botao_zerar_valores" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -190,6 +193,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_botao_temporizarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="txt_botao_cronometrar">
           <Properties>
@@ -206,6 +212,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_botao_cronometrarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="txt_display">
           <Properties>
@@ -359,6 +368,28 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_botao_pararActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="txt_botao_zerar_valores">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="99" red="99" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icones/clock_delete.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="ZERAR VALORES"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder roundedCorners="true" thickness="2"/>
+              </Border>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_botao_zerar_valoresActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -10,6 +10,8 @@ package timer;
 
 
 // IMPORTAÇÃO DE BIBLIOTECAS:
+import java.text.SimpleDateFormat;
+import java.util.TimerTask;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -21,6 +23,13 @@ public class TimerFrame extends javax.swing.JFrame {
     
     
     // DECLARAÇÃO DE VARIAVEIS E OBJETOS:
+    int aux1 = 0;
+    int tempo1 = 0;
+    int tempo2 = 0;
+    int tempo3 = 0;
+    int tempo4 = 0;
+    int tempo5 = 0;
+    int tempo6 = 0;
     BasicComboBoxRenderer.UIResource UIResource = new BasicComboBoxRenderer.UIResource();  
 
     
@@ -34,6 +43,7 @@ public class TimerFrame extends javax.swing.JFrame {
         txt_display.setHorizontalAlignment(javax.swing.JLabel.CENTER);
         UIResource.setHorizontalAlignment(SwingConstants.CENTER);  
         txt_botao_parar.setEnabled(false);
+        txt_botao_zerar_valores.setEnabled(false);
         
         txt_segundos_parte1.removeAllItems();
         txt_segundos_parte2.removeAllItems();
@@ -49,18 +59,25 @@ public class TimerFrame extends javax.swing.JFrame {
         txt_horas_parte1.setRenderer(UIResource);
         txt_horas_parte2.setRenderer(UIResource);
         
-        int contador_numerico = 0;
-        while ( contador_numerico != 10 ) { 
-            txt_segundos_parte1.addItem(String.valueOf(contador_numerico)); 
-            txt_segundos_parte2.addItem(String.valueOf(contador_numerico)); 
-            txt_minutos_parte1.addItem(String.valueOf(contador_numerico)); 
-            txt_minutos_parte2.addItem(String.valueOf(contador_numerico)); 
-            txt_horas_parte1.addItem(String.valueOf(contador_numerico)); 
-            txt_horas_parte2.addItem(String.valueOf(contador_numerico)); 
-            contador_numerico++;
+        int contador_numerico1 = 0;
+        int contador_numerico2 = 0;
+        
+        while ( contador_numerico1 != 10 ) { 
+            txt_segundos_parte1.addItem(String.valueOf(contador_numerico1)); 
+            txt_minutos_parte1.addItem(String.valueOf(contador_numerico1)); 
+            txt_horas_parte1.addItem(String.valueOf(contador_numerico1));
+            txt_horas_parte2.addItem(String.valueOf(contador_numerico1)); 
+            contador_numerico1++;
+        }
+        
+        while ( contador_numerico2 != 6 ) { 
+            txt_segundos_parte2.addItem(String.valueOf(contador_numerico2)); 
+            txt_minutos_parte2.addItem(String.valueOf(contador_numerico2)); 
+            contador_numerico2++;
         }
         
         txt_horas_parte1.setSelectedIndex(1);
+        txt_horas_parte2.setEnabled(false);
         
     }
 
@@ -85,6 +102,7 @@ public class TimerFrame extends javax.swing.JFrame {
         txt_segundos_parte2 = new javax.swing.JComboBox<>();
         txt_segundos_parte1 = new javax.swing.JComboBox<>();
         txt_botao_parar = new javax.swing.JButton();
+        txt_botao_zerar_valores = new javax.swing.JButton();
         txt_barra_de_menu_geral = new javax.swing.JMenuBar();
         txt_menu_geral = new javax.swing.JMenu();
         txt_sub_item_sair = new javax.swing.JMenuItem();
@@ -101,11 +119,21 @@ public class TimerFrame extends javax.swing.JFrame {
         txt_botao_temporizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/clock_play.png"))); // NOI18N
         txt_botao_temporizar.setText("TEMPORIZAR");
         txt_botao_temporizar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        txt_botao_temporizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_botao_temporizarActionPerformed(evt);
+            }
+        });
 
         txt_botao_cronometrar.setBackground(new java.awt.Color(204, 255, 51));
         txt_botao_cronometrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/clock_play.png"))); // NOI18N
         txt_botao_cronometrar.setText("CRONOMETRAR");
         txt_botao_cronometrar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        txt_botao_cronometrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_botao_cronometrarActionPerformed(evt);
+            }
+        });
 
         txt_display.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/clock_edit.png"))); // NOI18N
         txt_display.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "- DISPLAY -", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
@@ -132,6 +160,21 @@ public class TimerFrame extends javax.swing.JFrame {
         txt_botao_parar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/clock_stop.png"))); // NOI18N
         txt_botao_parar.setText("PARAR");
         txt_botao_parar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        txt_botao_parar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_botao_pararActionPerformed(evt);
+            }
+        });
+
+        txt_botao_zerar_valores.setBackground(new java.awt.Color(153, 153, 255));
+        txt_botao_zerar_valores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/clock_delete.png"))); // NOI18N
+        txt_botao_zerar_valores.setText("ZERAR VALORES");
+        txt_botao_zerar_valores.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        txt_botao_zerar_valores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_botao_zerar_valoresActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout txt_painel_geralLayout = new javax.swing.GroupLayout(txt_painel_geral);
         txt_painel_geral.setLayout(txt_painel_geralLayout);
@@ -140,6 +183,12 @@ public class TimerFrame extends javax.swing.JFrame {
             .addGroup(txt_painel_geralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(txt_painel_geralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(txt_painel_geralLayout.createSequentialGroup()
+                        .addComponent(txt_botao_cronometrar, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_botao_parar, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_botao_temporizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(txt_painel_geralLayout.createSequentialGroup()
                         .addGroup(txt_painel_geralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txt_display, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -156,12 +205,7 @@ public class TimerFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txt_segundos_parte1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(txt_painel_geralLayout.createSequentialGroup()
-                        .addComponent(txt_botao_cronometrar, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_botao_parar, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_botao_temporizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(txt_botao_zerar_valores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         txt_painel_geralLayout.setVerticalGroup(
@@ -182,6 +226,8 @@ public class TimerFrame extends javax.swing.JFrame {
                     .addComponent(txt_botao_cronometrar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_botao_parar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_botao_temporizar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_botao_zerar_valores, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -248,6 +294,7 @@ public class TimerFrame extends javax.swing.JFrame {
         
         if ( confirmar_sair == 0 ) {
 
+            System.exit(0);
             this.dispose();
 
         }
@@ -261,6 +308,147 @@ public class TimerFrame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "PROJETO DE \"TIMER/TEMPORIZADOR\" QUE CONSISTE EM:" + "\n" + " - CRONOMETRAR" + "\n" + " - TEMPORIZAR", "AVISO:", 1);
         
     }//GEN-LAST:event_txt_sub_item_infoActionPerformed
+
+    
+    // BOTÃO CRONOMETRAR:
+    private void txt_botao_cronometrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_botao_cronometrarActionPerformed
+        
+        aux1 = 0;
+        txt_botao_parar.setEnabled(true);
+        txt_botao_cronometrar.setEnabled(false);
+        txt_botao_temporizar.setEnabled(false);
+        txt_menu_geral.setEnabled(false);
+        txt_menu_sobre.setEnabled(false);
+        
+        txt_segundos_parte1.setEnabled(false);
+        txt_segundos_parte2.setEnabled(false);
+        txt_minutos_parte1.setEnabled(false);
+        txt_minutos_parte2.setEnabled(false);
+        txt_horas_parte1.setEnabled(false);
+        txt_horas_parte2.setEnabled(false);
+        
+        tempo6 = txt_segundos_parte1.getSelectedIndex();
+        tempo5 = txt_segundos_parte2.getSelectedIndex();
+        tempo4 = txt_minutos_parte1.getSelectedIndex();
+        tempo3 = txt_minutos_parte2.getSelectedIndex();
+        tempo2 = txt_horas_parte1.getSelectedIndex();
+        tempo1 = txt_horas_parte2.getSelectedIndex();
+        
+        java.util.Timer timer = null;
+        final SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+
+        if (timer == null) {      
+        
+        timer = new java.util.Timer();  
+        TimerTask tarefa = new TimerTask() {   
+           
+            public void run() {      
+
+                try {      
+              
+                    txt_display.setText("CRONOMETRO - [ " + tempo1 + tempo2 + "h:" + tempo3 + tempo4 + "m:" + tempo5 + tempo6 + "s ]");
+                    tempo6++;
+
+                    // "SEGUNDOS":
+                    if (tempo6 > 9) { tempo6 = 0; tempo5++; }
+                    if (tempo5 > 5) { tempo5 = 0; tempo4++; }
+
+                    // "MINUTOS":
+                    if (tempo4 > 9) { tempo4 = 0; tempo3++; }
+                    if (tempo3 > 5) { tempo3 = 0; tempo2++; }
+
+                    // "HORAS":
+                    if (tempo2 > 9) { tempo6 = 0; tempo5 = 0; tempo4 = 0; tempo3 = 0; tempo2 = 0; }
+                     
+                    txt_segundos_parte1.setSelectedIndex(tempo6-1);
+                    txt_segundos_parte2.setSelectedIndex(tempo5);
+                    txt_minutos_parte1.setSelectedIndex(tempo4);
+                    txt_minutos_parte2.setSelectedIndex(tempo3);
+                    txt_horas_parte1.setSelectedIndex(tempo2);
+                    txt_horas_parte2.setSelectedIndex(tempo1);
+                    
+                    if ( aux1 == 1 ) { this.cancel(); }
+        
+        } catch (Exception e) {      
+                    
+                } catch (Throwable ex) {
+                    
+                }  
+                
+            }   
+               
+         };      
+        
+        if ( aux1 == 0 ) { timer.scheduleAtFixedRate(tarefa, 0, 1000); }  
+        if ( aux1 == 1 ) { timer.cancel(); tarefa.cancel(); }
+      
+    }    
+  
+    }//GEN-LAST:event_txt_botao_cronometrarActionPerformed
+
+    
+    // BOTÃO PARAR:
+    private void txt_botao_pararActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_botao_pararActionPerformed
+        
+        int confirmar_parar = 0;
+        confirmar_parar = 0;
+        confirmar_parar = JOptionPane.showConfirmDialog(null, "REALMENTE DESEJA PARA A CONTAGEM ?");
+        
+        if ( confirmar_parar == 0 ) {
+
+            aux1 = 1;
+        
+            txt_segundos_parte1.setEnabled(true);
+            txt_segundos_parte2.setEnabled(true);
+            txt_minutos_parte1.setEnabled(true);
+            txt_minutos_parte2.setEnabled(true);
+            txt_horas_parte1.setEnabled(true);
+            txt_horas_parte2.setEnabled(false);
+
+            txt_botao_cronometrar.setEnabled(true);
+            txt_botao_temporizar.setEnabled(true);
+            txt_botao_zerar_valores.setEnabled(true);
+            txt_menu_geral.setEnabled(true);
+            txt_menu_sobre.setEnabled(true);
+            txt_botao_parar.setEnabled(false);
+
+        }
+        
+    }//GEN-LAST:event_txt_botao_pararActionPerformed
+
+    
+    // BOTÃO ZERAR VALORES:
+    private void txt_botao_zerar_valoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_botao_zerar_valoresActionPerformed
+        
+        int confirmar_zerar = 0;
+        confirmar_zerar = 0;
+        confirmar_zerar = JOptionPane.showConfirmDialog(null, "REALMENTE DESEJA ZERAR OS VALORES DA CONTAGEM ?");
+        
+        if ( confirmar_zerar == 0 ) {
+
+            txt_display.setText(null);
+            
+            txt_segundos_parte1.setSelectedIndex(0);
+            txt_segundos_parte2.setSelectedIndex(0);
+            txt_minutos_parte1.setSelectedIndex(0);
+            txt_minutos_parte2.setSelectedIndex(0);
+            txt_horas_parte1.setSelectedIndex(1);
+            txt_horas_parte2.setSelectedIndex(0);
+            
+            txt_botao_zerar_valores.setEnabled(false);
+
+        }
+        
+        
+    }//GEN-LAST:event_txt_botao_zerar_valoresActionPerformed
+
+    
+    // BOTÃO TEMPORIZAR:
+    private void txt_botao_temporizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_botao_temporizarActionPerformed
+        
+        // IMPLEMENTE SEU CÓDIGO AQUI!
+        
+    }//GEN-LAST:event_txt_botao_temporizarActionPerformed
 
     
     /**
@@ -303,6 +491,7 @@ public class TimerFrame extends javax.swing.JFrame {
     private javax.swing.JButton txt_botao_cronometrar;
     private javax.swing.JButton txt_botao_parar;
     private javax.swing.JButton txt_botao_temporizar;
+    private javax.swing.JButton txt_botao_zerar_valores;
     private javax.swing.JLabel txt_display;
     private javax.swing.JComboBox<String> txt_horas_parte1;
     private javax.swing.JComboBox<String> txt_horas_parte2;
