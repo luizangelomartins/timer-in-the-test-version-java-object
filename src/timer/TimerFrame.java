@@ -1,23 +1,70 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+
+
+        // [ " CRIADOR: LUIZ ÂNGELO MARTINS " ]:
+
+
+
+// PACOTE DA CLASSE:
 package timer;
 
-/**
- *
- * @author Luiz Ângelo Martins
- */
-public class TimerFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TimerFrame
-     */
+// IMPORTAÇÃO DE BIBLIOTECAS:
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
+
+
+// MÉTODO PRINCIPAL DA CLASSE:
+public class TimerFrame extends javax.swing.JFrame {
+    
+    
+    // DECLARAÇÃO DE VARIAVEIS E OBJETOS:
+    BasicComboBoxRenderer.UIResource UIResource = new BasicComboBoxRenderer.UIResource();  
+
+    
+    // " INICIALIZADOR ":
     public TimerFrame() {
+        
         initComponents();
+        ImageIcon icone = new ImageIcon(getClass().getResource("/icones/clock_play.png"));
+        setIconImage(icone.getImage());
+        
+        txt_display.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+        UIResource.setHorizontalAlignment(SwingConstants.CENTER);  
+        txt_botao_parar.setEnabled(false);
+        
+        txt_segundos_parte1.removeAllItems();
+        txt_segundos_parte2.removeAllItems();
+        txt_minutos_parte1.removeAllItems();
+        txt_minutos_parte2.removeAllItems();
+        txt_horas_parte1.removeAllItems();
+        txt_horas_parte2.removeAllItems();
+        
+        txt_segundos_parte1.setRenderer(UIResource);
+        txt_segundos_parte2.setRenderer(UIResource);
+        txt_minutos_parte1.setRenderer(UIResource);
+        txt_minutos_parte2.setRenderer(UIResource);
+        txt_horas_parte1.setRenderer(UIResource);
+        txt_horas_parte2.setRenderer(UIResource);
+        
+        int contador_numerico = 0;
+        while ( contador_numerico != 10 ) { 
+            txt_segundos_parte1.addItem(String.valueOf(contador_numerico)); 
+            txt_segundos_parte2.addItem(String.valueOf(contador_numerico)); 
+            txt_minutos_parte1.addItem(String.valueOf(contador_numerico)); 
+            txt_minutos_parte2.addItem(String.valueOf(contador_numerico)); 
+            txt_horas_parte1.addItem(String.valueOf(contador_numerico)); 
+            txt_horas_parte2.addItem(String.valueOf(contador_numerico)); 
+            contador_numerico++;
+        }
+        
+        txt_horas_parte1.setSelectedIndex(1);
+        
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,7 +91,7 @@ public class TimerFrame extends javax.swing.JFrame {
         txt_menu_sobre = new javax.swing.JMenu();
         txt_sub_item_info = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("TIMER");
         setResizable(false);
 
@@ -60,6 +107,7 @@ public class TimerFrame extends javax.swing.JFrame {
         txt_botao_cronometrar.setText("CRONOMETRAR");
         txt_botao_cronometrar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
+        txt_display.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/clock_edit.png"))); // NOI18N
         txt_display.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "- DISPLAY -", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
 
         txt_horas_parte2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -143,6 +191,11 @@ public class TimerFrame extends javax.swing.JFrame {
         txt_sub_item_sair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
         txt_sub_item_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancel.png"))); // NOI18N
         txt_sub_item_sair.setText("SAIR");
+        txt_sub_item_sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_sub_item_sairActionPerformed(evt);
+            }
+        });
         txt_menu_geral.add(txt_sub_item_sair);
 
         txt_barra_de_menu_geral.add(txt_menu_geral);
@@ -153,6 +206,11 @@ public class TimerFrame extends javax.swing.JFrame {
         txt_sub_item_info.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
         txt_sub_item_info.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/error.png"))); // NOI18N
         txt_sub_item_info.setText("INFO");
+        txt_sub_item_info.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_sub_item_infoActionPerformed(evt);
+            }
+        });
         txt_menu_sobre.add(txt_sub_item_info);
 
         txt_barra_de_menu_geral.add(txt_menu_sobre);
@@ -180,6 +238,31 @@ public class TimerFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    // SUB ITEM DR MENU - SAIR - [ MENU GERAL ]:
+    private void txt_sub_item_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_sub_item_sairActionPerformed
+
+        int confirmar_sair = 0;
+        confirmar_sair = 0;
+        confirmar_sair = JOptionPane.showConfirmDialog(null, "REALMENTE DESEJA SAIR ?");
+        
+        if ( confirmar_sair == 0 ) {
+
+            this.dispose();
+
+        }
+
+    }//GEN-LAST:event_txt_sub_item_sairActionPerformed
+
+    
+    // SUB ITEM DO MENU - INFO - [ MENU SOBRE ]:
+    private void txt_sub_item_infoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_sub_item_infoActionPerformed
+
+        JOptionPane.showMessageDialog(null, "PROJETO DE \"TIMER/TEMPORIZADOR\" QUE CONSISTE EM:" + "\n" + " - CRONOMETRAR" + "\n" + " - TEMPORIZAR", "AVISO:", 1);
+        
+    }//GEN-LAST:event_txt_sub_item_infoActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
@@ -234,3 +317,7 @@ public class TimerFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem txt_sub_item_sair;
     // End of variables declaration//GEN-END:variables
 }
+
+
+
+
