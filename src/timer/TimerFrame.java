@@ -313,10 +313,17 @@ public class TimerFrame extends javax.swing.JFrame {
     // BOTÃO CRONOMETRAR:
     private void txt_botao_cronometrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_botao_cronometrarActionPerformed
         
+        int confirmar_contagem = 0;
+        confirmar_contagem = 0;
+        confirmar_contagem = JOptionPane.showConfirmDialog(null, "INICIAR A CONTAGEM ?");
+        
+        if ( confirmar_contagem == 0 ) {
+        
         aux1 = 0;
         txt_botao_parar.setEnabled(true);
         txt_botao_cronometrar.setEnabled(false);
         txt_botao_temporizar.setEnabled(false);
+        txt_botao_zerar_valores.setEnabled(false);
         txt_menu_geral.setEnabled(false);
         txt_menu_sobre.setEnabled(false);
         
@@ -383,7 +390,9 @@ public class TimerFrame extends javax.swing.JFrame {
         if ( aux1 == 1 ) { timer.cancel(); tarefa.cancel(); }
       
     }    
-  
+        
+    }
+        
     }//GEN-LAST:event_txt_botao_cronometrarActionPerformed
 
     
@@ -392,7 +401,7 @@ public class TimerFrame extends javax.swing.JFrame {
         
         int confirmar_parar = 0;
         confirmar_parar = 0;
-        confirmar_parar = JOptionPane.showConfirmDialog(null, "REALMENTE DESEJA PARA A CONTAGEM ?");
+        confirmar_parar = JOptionPane.showConfirmDialog(null, "REALMENTE DESEJA PARAR A CONTAGEM ?");
         
         if ( confirmar_parar == 0 ) {
 
@@ -446,7 +455,93 @@ public class TimerFrame extends javax.swing.JFrame {
     // BOTÃO TEMPORIZAR:
     private void txt_botao_temporizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_botao_temporizarActionPerformed
         
-        // IMPLEMENTE SEU CÓDIGO AQUI!
+        int confirmar_contagem = 0;
+        confirmar_contagem = 0;
+        confirmar_contagem = JOptionPane.showConfirmDialog(null, "INICIAR A CONTAGEM ?");
+        
+        if ( confirmar_contagem == 0 ) {
+        
+        aux1 = 0;
+        txt_botao_parar.setEnabled(true);
+        txt_botao_cronometrar.setEnabled(false);
+        txt_botao_temporizar.setEnabled(false);
+        txt_botao_zerar_valores.setEnabled(false);
+        txt_menu_geral.setEnabled(false);
+        txt_menu_sobre.setEnabled(false);
+        
+        txt_segundos_parte1.setEnabled(false);
+        txt_segundos_parte2.setEnabled(false);
+        txt_minutos_parte1.setEnabled(false);
+        txt_minutos_parte2.setEnabled(false);
+        txt_horas_parte1.setEnabled(false);
+        txt_horas_parte2.setEnabled(false);
+        
+        tempo6 = txt_segundos_parte1.getSelectedIndex();
+        tempo5 = txt_segundos_parte2.getSelectedIndex();
+        tempo4 = txt_minutos_parte1.getSelectedIndex();
+        tempo3 = txt_minutos_parte2.getSelectedIndex();
+        tempo2 = txt_horas_parte1.getSelectedIndex();
+        tempo1 = txt_horas_parte2.getSelectedIndex();
+        
+        java.util.Timer timer = null;
+        final SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+
+        if (timer == null) {      
+        
+        timer = new java.util.Timer();  
+        TimerTask tarefa = new TimerTask() {   
+           
+            public void run() {      
+
+                try {      
+              
+                    txt_display.setText("TEMPORIZADOR - [ " + tempo1 + tempo2 + "h:" + tempo3 + tempo4 + "m:" + tempo5 + tempo6 + "s ]");
+                    tempo6--;
+
+                    // "SEGUNDOS":
+                    if (tempo6 < 0) { tempo6 = 9; tempo5--; }
+                    if (tempo5 < 0) { tempo5 = 5; tempo4--; }
+
+                    // "MINUTOS":
+                    if (tempo4 < 0) { tempo4 = 9; tempo3--; }
+                    if (tempo3 < 0) { tempo3 = 5; tempo2--; }
+
+                    // "HORAS":
+                    if (tempo2 == 0 && tempo3 == 0 && tempo4 == 0 && tempo5 == 0 && tempo6 == 0) {  
+                    
+                        tempo2 = 1;
+                        tempo3 = 0;
+                        tempo4 = 0;
+                        tempo5 = 5;
+                        tempo6 = 9;
+                        
+                    }
+                     
+                    txt_segundos_parte1.setSelectedIndex(tempo6+1);
+                    txt_segundos_parte2.setSelectedIndex(tempo5);
+                    txt_minutos_parte1.setSelectedIndex(tempo4);
+                    txt_minutos_parte2.setSelectedIndex(tempo3);
+                    txt_horas_parte1.setSelectedIndex(tempo2);
+                    txt_horas_parte2.setSelectedIndex(tempo1);
+                    
+                    if ( aux1 == 1 ) { this.cancel(); }
+        
+        } catch (Exception e) {      
+                    
+                } catch (Throwable ex) {
+                    
+                }  
+                
+            }   
+               
+         };      
+        
+        if ( aux1 == 0 ) { timer.scheduleAtFixedRate(tarefa, 0, 1000); }  
+        if ( aux1 == 1 ) { timer.cancel(); tarefa.cancel(); }
+      
+    }    
+        
+    }
         
     }//GEN-LAST:event_txt_botao_temporizarActionPerformed
 
